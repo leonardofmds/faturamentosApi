@@ -1,4 +1,8 @@
 package br.com.cotiinformatica.services;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -17,6 +21,8 @@ public class FaturamentoService {
 
         var mapper = new ModelMapper();
         var faturamento = mapper.map(request, Faturamento.class);
+        //faturamento.setDataPedido(request.getDataPedido() != null ? LocalDate.parse(request.getDataPedido()) : null);
+        faturamento.setDataHoraCriacao(Date.from(Instant.now()));
 
         faturamentoRepository.save(faturamento);
         return mapper.map(faturamento, FaturamentosResponse.class);
